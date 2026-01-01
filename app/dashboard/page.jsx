@@ -20,6 +20,11 @@ const Dashboard = () => {
   const router = useRouter();
 
   const fetchDashboardData = async () => {
+    if (typeof window === 'undefined') {
+      setLoading(false);
+      return;
+    }
+    
     const token = localStorage.getItem("token");
     if (!token) {
       // If not authenticated, skip protected API calls but allow the
@@ -37,7 +42,9 @@ const Dashboard = () => {
       if (userResponse.data.success) {
         setUser(userResponse.data.user);
       } else {
-        localStorage.removeItem("token");
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem("token");
+        }
         router.push("/login");
         return;
       }
@@ -75,7 +82,9 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchDashboardData();
+    if (typeof window !== 'undefined') {
+      fetchDashboardData();
+    }
   }, []);
 
   if (loading) {

@@ -5,11 +5,12 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-const AppContext = createContext();
+const AppContext = createContext({});
 
 export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(undefined); // undefined = loading, null = no user
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
   const axiosInstance = axios.create({
@@ -17,8 +18,15 @@ export const AppProvider = ({ children }) => {
     withCredentials: true,
   });
 
-  // Check auth on load
+  // Set mounted state on client
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Check auth on load (only after mount)
+  useEffect(() => {
+    if (!mounted) return;
+    
     const checkAuth = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -41,7 +49,7 @@ export const AppProvider = ({ children }) => {
     };
 
     checkAuth();
-  }, []);
+  }, [mounted]);
 
   const register = async (name, email, password) => {
     try {
@@ -53,7 +61,9 @@ export const AppProvider = ({ children }) => {
       });
 
       if (data.success) {
-        localStorage.setItem("token", data.token); // store token
+        if (typeof window !== 'undefined') {
+          localStorage.setItem("token", data.token); // store token
+        }
         setUser(data.user);
         toast.success("Account created successfully");
         router.push("/dashboard");
@@ -76,7 +86,9 @@ export const AppProvider = ({ children }) => {
       });
 
       if (data.success) {
-        localStorage.setItem("token", data.token);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem("token", data.token);
+        }
         setUser(data.user);
         toast.success("Logged in successfully");
         router.push("/dashboard");
@@ -93,7 +105,9 @@ export const AppProvider = ({ children }) => {
   const logout = async () => {
     try {
       setLoading(true);
-      localStorage.removeItem("token");
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem("token");
+      }
       setUser(null);
       toast.success("Logged out successfully");
       router.push("/"); // Redirect to Home page

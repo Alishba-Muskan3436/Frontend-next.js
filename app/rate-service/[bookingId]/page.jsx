@@ -20,6 +20,8 @@ const ServiceRating = () => {
 
   useEffect(() => {
     const fetchBookingDetails = async () => {
+      if (typeof window === 'undefined') return;
+      
       try {
         const token = localStorage.getItem("token");
         const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings/${bookingId}`, {
@@ -59,6 +61,8 @@ const ServiceRating = () => {
 
     try {
       setSubmitting(true);
+      if (typeof window === 'undefined') return;
+      
       const token = localStorage.getItem("token");
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings/${bookingId}/rate`,

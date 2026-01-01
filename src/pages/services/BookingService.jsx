@@ -20,8 +20,6 @@ const BookingService = () => {
   });
   const [submitting, setSubmitting] = useState(false);
 
-  const token = localStorage.getItem("token");
-
   const toggleForm = () => setFormVisible(!formVisible);
 
   const handleChange = (e) => {
@@ -30,7 +28,8 @@ const BookingService = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
     if (!token) {
       toast.error("Please login to book a service");
       return;

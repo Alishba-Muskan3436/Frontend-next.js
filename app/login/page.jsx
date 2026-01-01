@@ -62,8 +62,10 @@ const Login = () => {
       const data = await login(email, password);
 
       if (data.success) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        if (typeof window !== 'undefined') {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+        }
         toast.success("Logged in successfully");
         router.push("/dashboard");
       }
