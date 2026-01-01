@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
-import { useAppContext } from "../context/Appcontext";
+import { useAppContext } from "../../context/Appcontext";
 
 // Import validation helpers
-import { sanitizeInput } from "../utils/sanitizeInput";
-import { regNameTest } from "../utils/regNameTest";
-import { regEmailTest } from "../utils/regEmailTest";
-import { charLength } from "../utils/charLength";
+import { sanitizeInput } from "../Utils/sanitizeInput";
+import { regNameTest } from "../Utils/regNameTest";
+import { regEmailTest } from "../Utils/regEmailTest";
+import { charLength } from "../Utils/charLength";
 
 const Registration = () => {
   const { register } = useAppContext();
