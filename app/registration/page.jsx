@@ -11,6 +11,8 @@ import { regNameTest } from "@/src/Utils/regNameTest";
 import { regEmailTest } from "@/src/Utils/regEmailTest";
 import { charLength } from "@/src/Utils/charLength";
 
+export const dynamic = 'force-dynamic';
+
 const Registration = () => {
   const { register } = useAppContext();
   const router = useRouter();

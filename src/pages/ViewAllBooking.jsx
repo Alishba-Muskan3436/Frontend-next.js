@@ -601,4 +601,10 @@ const ViewBookings = () => {
   );
 };
 
-export default ViewBookings; 
+export default ViewBookings;
+
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+} 

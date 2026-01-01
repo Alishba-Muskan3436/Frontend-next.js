@@ -256,3 +256,9 @@ const ServiceRating = () => {
 };
 
 export default ServiceRating;
+
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}

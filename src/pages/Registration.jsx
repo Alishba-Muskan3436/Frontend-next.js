@@ -233,3 +233,9 @@ const Registration = () => {
 };
 
 export default Registration;
+
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}

@@ -780,3 +780,9 @@ const RatingManagement = () => {
 };
 
 export default RatingManagement;
+
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}

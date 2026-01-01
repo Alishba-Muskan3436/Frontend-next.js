@@ -10,6 +10,8 @@ import { sanitizeInput } from "@/src/Utils/sanitizeInput";
 import { regEmailTest } from "@/src/Utils/regEmailTest";
 import { charLength } from "@/src/Utils/charLength";
 
+export const dynamic = 'force-dynamic';
+
 const Login = () => {
   const { login } = useAppContext();
   const router = useRouter();

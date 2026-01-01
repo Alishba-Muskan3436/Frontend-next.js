@@ -7,6 +7,8 @@ import { useAppContext } from "@/context/Appcontext";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+export const dynamic = 'force-dynamic';
+
 const Dashboard = () => {
   const { user, setUser, logout } = useAppContext();
   const [loading, setLoading] = useState(true);

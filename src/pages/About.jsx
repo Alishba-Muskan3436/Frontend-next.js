@@ -214,3 +214,9 @@ function About(){
 };
 
 export default About;
+
+export async function getServerSideProps() {
+  return {
+    props: {},
+  };
+}
