@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import all styles from App.css */
+@import '../src/App.css';
+
