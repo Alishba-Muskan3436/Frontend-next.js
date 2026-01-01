@@ -537,83 +537,48 @@
 /* Ensure no conflicts with other styles */
 .instantchat-section * {
   box-sizing: border-box;
-}/* Prevent global app.css styles from touching Registration */
+}/* ============================================
+   SCOPED PAGE STYLES - Prevent Global CSS Interference
+   ============================================ */
+
+/* Registration page - isolated from global styles */
+.registration-page {
+  isolation: isolate;
+  position: relative;
+}
+
 .registration-page * {
-  all: unset;
-  all: revert;
   box-sizing: border-box;
 }
 
-/* Reapply Tailwind reset behavior */
-.registration-page input,
-.registration-page button,
-.registration-page label,
-.registration-page p,
-.registration-page h2,
-.registration-page div {
-  all: revert-layer;
+/* Login page - isolated from global styles */
+.login-page {
+  isolation: isolate;
+  position: relative;
 }
 
-/* Prevent global app.css styles from touching ViewBookings */
-.viewbookings-page * {
-  all: unset;
-  all: revert;
-  box-sizing: border-box;
-}
-
-/* Reapply Tailwind reset behavior */
-.viewbookings-page input,
-.viewbookings-page button,
-.viewbookings-page select,
-.viewbookings-page label,
-.viewbookings-page p,
-.viewbookings-page h2,
-.viewbookings-page div,
-.viewbookings-page table,
-.viewbookings-page th,
-.viewbookings-page td,
-.viewbookings-page tr,
-.viewbookings-page tbody,
-.viewbookings-page thead {
-  all: revert-layer;
-}
-/* Prevent global app.css styles from affecting Login page */
 .login-page * {
-  all: unset;
-  all: revert;
   box-sizing: border-box;
 }
 
-/* Reapply Tailwind reset behavior */
-.login-page input,
-.login-page button,
-.login-page label,
-.login-page p,
-.login-page h2,
-.login-page div {
-  all: revert-layer;
+/* Dashboard page - isolated from global styles */
+.dashboard-page {
+  isolation: isolate;
+  position: relative;
 }
 
-
-/* Prevent global app.css styles from affecting Dashboard page */
 .dashboard-page * {
-  all: unset;
-  all: revert;
   box-sizing: border-box;
 }
 
-/* Reapply Tailwind reset behavior for common elements */
-.dashboard-page input,
-.dashboard-page button,
-.dashboard-page label,
-.dashboard-page p,
-.dashboard-page h1,
-.dashboard-page h2,
-.dashboard-page h3,
-.dashboard-page div,
-.dashboard-page span,
-.dashboard-page a {
-  all: revert-layer;
+/* ViewBookings page - isolated from global styles */
+.viewbookings-page {
+  isolation: isolate;
+  position: relative;
+}
+
+.viewbookings-page * {
+  box-sizing: border-box;
 }
 
 
@@ -3547,4 +3512,5 @@ body {
     flex-direction: column;
   }
 }
+
 

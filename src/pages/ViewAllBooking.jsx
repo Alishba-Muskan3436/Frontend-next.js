@@ -1,9 +1,13 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 const ViewBookings = () => {
+  const router = useRouter();
   const [bookings, setBookings] = useState([]);
   const [filteredBookings, setFilteredBookings] = useState([]);
   const [activeFilter, setActiveFilter] = useState('all'); // 'all', 'pending', 'completed', 'cancelled'
@@ -62,7 +66,7 @@ const ViewBookings = () => {
   const fetchBookings = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get("http://localhost:5000/api/bookings", {
+      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (data.success) {
@@ -85,7 +89,7 @@ const ViewBookings = () => {
     
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/bookings/${id}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setBookings(bookings.filter(b => b._id !== id));
@@ -99,7 +103,7 @@ const ViewBookings = () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.put(
-        `http://localhost:5000/api/bookings/${id}`, 
+        `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings/${id}`, 
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -134,7 +138,7 @@ const ViewBookings = () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.put(
-        `http://localhost:5000/api/bookings/${id}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings/${id}`,
         editFormData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -341,8 +345,8 @@ const ViewBookings = () => {
                           {activeFilter === 'cancelled' && 'No bookings have been cancelled'}
                         </p>
                         <Link 
-                          to="/services/booking-service"
-                          className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors"
+                          href="/services/booking-service"
+                          className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors shadow-md hover:shadow-lg"
                         >
                           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -526,7 +530,7 @@ const ViewBookings = () => {
                           {/* Rating Button - Changed to proper button styling */}
                           {booking.status === 'Completed' && !booking.rated && (
                             <button
-                              onClick={() => window.location.href = `/rate-service/${booking._id}`}
+                              onClick={() => router.push(`/rate-service/${booking._id}`)}
                               className="w-full bg-yellow-500 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-colors shadow-sm text-center"
                             >
                               Rate Service

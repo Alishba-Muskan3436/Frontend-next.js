@@ -1,10 +1,13 @@
+"use client";
+
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useRouter } from "next/navigation";
 import "../../App.css";
 
 const BookingService = () => {
+  const router = useRouter();
   const [formVisible, setFormVisible] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -18,7 +21,6 @@ const BookingService = () => {
   const [submitting, setSubmitting] = useState(false);
 
   const token = localStorage.getItem("token");
-  const navigate = useNavigate(); // Initialize navigate
 
   const toggleForm = () => setFormVisible(!formVisible);
 
@@ -40,7 +42,7 @@ const BookingService = () => {
       console.log("Submitting booking data:", formData);
       
       const response = await axios.post(
-        "http://localhost:5000/api/bookings",
+        `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings`,
         formData,
         { 
           headers: { 
@@ -69,7 +71,7 @@ const BookingService = () => {
         
         // Redirect to dashboard after 1 second
         setTimeout(() => {
-          navigate("/dashboard");
+          router.push("/dashboard");
         }, 1000);
       }
     } catch (err) {

@@ -93,108 +93,165 @@ const Registration = () => {
   };
 
   return (
-    <div className="registration-page min-h-screen flex items-center justify-center bg-emerald-50">
-      <div className="bg-white p-12 rounded-xl shadow-lg w-full max-w-md border border-emerald-100">
-        <h2 className="text-3xl font-bold mb-6 text-center text-emerald-800">
-          Register
-        </h2>
+    <div className="registration-page min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-white to-amber-50 py-8 px-4">
+      <div className="bg-white p-8 md:p-12 rounded-2xl shadow-2xl w-full max-w-md border border-emerald-100/50 backdrop-blur-sm">
+        <div className="text-center mb-8">
+          <h2 className="text-4xl font-bold mb-2 text-emerald-800">
+            Create Account
+          </h2>
+          <p className="text-gray-600 text-sm">Join us and get started today</p>
+        </div>
 
         {errors.overall && (
-          <p className="text-red-500 text-center mb-4 font-medium">
-            {errors.overall}
-          </p>
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-600 text-center text-sm font-medium">
+              {errors.overall}
+            </p>
+          </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-5">
-            <label className="block text-emerald-700 mb-2 font-medium">Name*</label>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-emerald-700 mb-2 font-semibold text-sm">
+              Full Name <span className="text-red-500">*</span>
+            </label>
             <input
               type="text"
               name="name"
               value={inputData.name}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-300"
-              placeholder="Enter your name"
+              className={`w-full px-4 py-3 border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent ${
+                errors.name 
+                  ? 'border-red-300 bg-red-50' 
+                  : 'border-emerald-200 bg-white hover:border-emerald-300'
+              }`}
+              placeholder="Enter your full name"
               required
             />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                <span>⚠</span> {errors.name}
+              </p>
+            )}
           </div>
 
-          <div className="mb-5">
-            <label className="block text-emerald-700 mb-2 font-medium">Email*</label>
+          <div>
+            <label className="block text-emerald-700 mb-2 font-semibold text-sm">
+              Email Address <span className="text-red-500">*</span>
+            </label>
             <input
               type="email"
               name="email"
               value={inputData.email}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-300"
+              className={`w-full px-4 py-3 border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent ${
+                errors.email 
+                  ? 'border-red-300 bg-red-50' 
+                  : 'border-emerald-200 bg-white hover:border-emerald-300'
+              }`}
               placeholder="Enter your email"
               required
             />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                <span>⚠</span> {errors.email}
+              </p>
+            )}
           </div>
 
-          <div className="mb-5">
-            <label className="block text-emerald-700 mb-2 font-medium">Password*</label>
+          <div>
+            <label className="block text-emerald-700 mb-2 font-semibold text-sm">
+              Password <span className="text-red-500">*</span>
+            </label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={inputData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-300"
-                placeholder="Enter password"
+                className={`w-full px-4 py-3 pr-12 border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent ${
+                  errors.password 
+                    ? 'border-red-300 bg-red-50' 
+                    : 'border-emerald-200 bg-white hover:border-emerald-300'
+                }`}
+                placeholder="Enter your password"
                 required
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 hover:text-gray-800"
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
               </button>
             </div>
-            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                <span>⚠</span> {errors.password}
+              </p>
+            )}
           </div>
 
-          <div className="mb-6">
-            <label className="block text-emerald-700 mb-2 font-medium">Confirm Password*</label>
+          <div>
+            <label className="block text-emerald-700 mb-2 font-semibold text-sm">
+              Confirm Password <span className="text-red-500">*</span>
+            </label>
             <div className="relative">
               <input
                 type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
                 value={inputData.confirmPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-300"
-                placeholder="Confirm password"
+                className={`w-full px-4 py-3 pr-12 border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent ${
+                  errors.confirmPassword 
+                    ? 'border-red-300 bg-red-50' 
+                    : 'border-emerald-200 bg-white hover:border-emerald-300'
+                }`}
+                placeholder="Confirm your password"
                 required
               />
               <button
                 type="button"
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-600 hover:text-gray-800"
+                className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                aria-label={showConfirmPassword ? "Hide password" : "Show password"}
               >
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                {showConfirmPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
               </button>
             </div>
-            {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
+            {errors.confirmPassword && (
+              <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1">
+                <span>⚠</span> {errors.confirmPassword}
+              </p>
+            )}
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-amber-500 text-white py-3 px-4 rounded-lg hover:bg-amber-600 transition duration-300 font-medium shadow-md hover:shadow-lg disabled:opacity-70"
+            className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3.5 px-4 rounded-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]"
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                Creating account...
+              </span>
+            ) : (
+              "Create Account"
+            )}
           </button>
 
-          <div className="mt-5 text-center">
-            <Link
-              href="/login"
-              className="text-emerald-600 hover:text-emerald-800 hover:underline font-medium"
-            >
-              Already have an account? <span className="text-amber-600">Login</span>
-            </Link>
+          <div className="mt-6 text-center">
+            <p className="text-gray-600 text-sm">
+              Already have an account?{" "}
+              <Link
+                href="/login"
+                className="text-emerald-600 hover:text-emerald-800 font-semibold hover:underline transition-colors"
+              >
+                Sign In
+              </Link>
+            </p>
           </div>
         </form>
       </div>

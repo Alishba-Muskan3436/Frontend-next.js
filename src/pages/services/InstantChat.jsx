@@ -1,11 +1,13 @@
+"use client";
+
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "../../App.css";
 
 const InstantChat = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const messagesEndRef = useRef(null);
   const messageInputRef = useRef(null);
   const [user, setUser] = useState(null);
@@ -45,24 +47,24 @@ const InstantChat = () => {
           await loadChatHistory();
         } else {
           toast.error("Please login to access chat");
-          navigate("/login");
+          router.push("/login");
         }
       } catch (error) {
         console.error("Error fetching user info:", error);
         toast.error("Error loading user data");
-        navigate("/login");
+        router.push("/login");
       } finally {
         setLoading(false);
       }
     };
 
     fetchUserInfo();
-  }, [navigate]);
+  }, [router]);
 
   const loadChatHistory = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get(`http://localhost:5000/api/chat/history`, {
+      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/chat/history`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -102,7 +104,7 @@ const InstantChat = () => {
 
     if (!user) {
       toast.error("Please login to send messages");
-      navigate("/login");
+      router.push("/login");
       return;
     }
 
@@ -132,7 +134,7 @@ const InstantChat = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.post("http://localhost:5000/api/chat/save-message", {
+      const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/chat/save-message`, {
         message: message,
         type: "user",
         timestamp: new Date()
@@ -212,7 +214,7 @@ const handleSaveEdit = async () => {
     const messageToSend = message;
     
     const { data } = await axios.put(
-      `http://localhost:5000/api/chat/edit-message/${editingMessage}`, 
+      `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/chat/edit-message/${editingMessage}`, 
       { text: messageToSend },
       { 
         headers: { 
@@ -228,7 +230,7 @@ const handleSaveEdit = async () => {
       // Send the edited message as a new message to get AI response
       setTimeout(async () => {
         try {
-          const sendResponse = await axios.post("http://localhost:5000/api/chat/save-message", {
+          const sendResponse = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/chat/save-message`, {
             message: messageToSend,
             type: "user",
             timestamp: new Date()
@@ -278,7 +280,7 @@ const handleSaveEdit = async () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.delete(
-        `http://localhost:5000/api/chat/delete-message/${messageId}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/chat/delete-message/${messageId}`,
         { 
           headers: { 
             Authorization: `Bearer ${token}` 

@@ -1,9 +1,11 @@
+"use client";
+
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import "../../App.css";
 
 const ReviewsRatings = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [reviews, setReviews] = useState([
     {
       name: "Alice Johnson",
@@ -45,11 +47,7 @@ const ReviewsRatings = () => {
 
   const handleLeaveReview = () => {
     // Redirect to login page when user clicks "Leave a Review"
-    navigate("/login", {
-      state: {
-        redirectMessage: "Please login to leave a review"
-      }
-    });
+    router.push("/login");
   };
 
   return (

@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -81,7 +83,7 @@ const RatingManagement = () => {
   const fetchBookings = async () => {
     try {
       const token = localStorage.getItem("token");
-      const { data } = await axios.get("http://localhost:5000/api/bookings", {
+      const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (data.success) {
@@ -110,7 +112,7 @@ const RatingManagement = () => {
     
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/bookings/${id}`, {
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setBookings(bookings.filter(b => b._id !== id));
@@ -126,7 +128,7 @@ const RatingManagement = () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.put(
-        `http://localhost:5000/api/bookings/${id}/rating`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings/${id}/rating`,
         { rated: false, rating: null },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -141,7 +143,7 @@ const RatingManagement = () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.put(
-        `http://localhost:5000/api/bookings/${id}`, 
+        `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings/${id}`, 
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -206,7 +208,7 @@ const RatingManagement = () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.put(
-        `http://localhost:5000/api/bookings/${id}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings/${id}`,
         editFormData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -223,7 +225,7 @@ const RatingManagement = () => {
     try {
       const token = localStorage.getItem("token");
       const { data } = await axios.put(
-        `http://localhost:5000/api/bookings/${id}/rating`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000"}/api/bookings/${id}/rating`,
         {
           rating: {
             stars: editRatingForm.stars,
@@ -705,7 +707,7 @@ const RatingManagement = () => {
                               {/* Rate Service Button - Only show for completed, unrated bookings */}
                               {booking.status === 'Completed' && !booking.rated && (
                                 <Link
-                                  to={`/rate-service/${booking._id}`}
+                                  href={`/rate-service/${booking._id}`}
                                   className="w-full bg-yellow-500 text-white px-3 py-2 rounded-lg text-sm font-semibold hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-colors shadow-sm text-center block"
                                 >
                                   Rate Service
